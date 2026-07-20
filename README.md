@@ -21,3 +21,72 @@
 > **📌 DISCLAIMER:** All features above are intentionally designed to **simulate real‑world malware behavior** for controlled testing environments. **Strictly FORBIDDEN** to use on production systems, unauthorized devices, or without explicit consent. Use only in isolated VMs or sandboxed labs. The author assumes **zero liability** for any misuse or damage.
 
  🦀
+<img width="576" height="462" alt="burningyourmom" src="https://github.com/user-attachments/assets/60a548ae-7831-4db3-acae-5ed00a88d8a3" />
+┌──────────────────┬───────────────┬──────────────────────┬─────────────┐
+│ Resource         │ Usage         │ Bar                  │ Status      │
+├──────────────────┼───────────────┼──────────────────────┼─────────────┤
+│ CPU              │ 100%          │ ████████████████████ │ 🔴 MAX      │
+│ RAM (Physical)   │ 15.8 / 16 GB  │ ████████████████████ │ 🔴 FULL     │ 
+│ RAM (Pagefile)   │ 72.0 / 80 GB  │ ████████████████████ │ 🔴 CRIT     │
+│ GPU              │ 98%           │ ████████████████████ │ 🟡 NEAR     │
+│ Disk I/O         │ 100%          │ ████████████████████ │ 🔴 BUSY     │
+└──────────────────┴───────────────┴──────────────────────┴─────────────┘
+<h2 align="center">🔐 File Hashes – Carb.exe</h2>
+
+<p align="center">
+  <strong>Verify the integrity and authenticity</strong> of the binary using the following cryptographic checksums.
+</p>
+
+<table align="center">
+  <thead>
+    <tr>
+      <th style="background-color: #2d2d2d; color: #ffffff; text-align: center;">Algorithm</th>
+      <th style="background-color: #2d2d2d; color: #ffffff; text-align: center;">Hash (Lowercase)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center"><strong>MD5</strong></td>
+      <td><code>d3eeec515c96cc5229fc4a1dc53eef7a</code></td>
+    </tr>
+    <tr style="background-color: #f6f8fa;">
+      <td align="center"><strong>SHA-1</strong></td>
+      <td><code>48b1bf84b31072f21a7ca57943911df11fd65e7a</code></td>
+    </tr>
+    <tr>
+      <td align="center"><strong>SHA-256</strong></td>
+      <td><code>26c4cfb4b689af68b71ff273c9eb11e15d6959f92317e1a19fdb84be08f2a41c</code></td>
+    </tr>
+  </tbody>
+</table>
+
+> 💡 **Tip:** Use `CertUtil -hashfile Carb.exe SHA256` (Windows) or `sha256sum Carb.exe` (Linux) to verify the hash locally.<h2 align="center">🔐 File Hashes – Carb.exe</h2>
+
+<p align="center">
+  <strong>Verify the integrity and authenticity</strong> of the binary using the following cryptographic checksums.
+</p>
+
+<table align="center">
+  <thead>
+    <tr>
+      <th style="background-color: #2d2d2d; color: #ffffff; text-align: center;">Algorithm</th>
+      <th style="background-color: #2d2d2d; color: #ffffff; text-align: center;">Hash (Lowercase)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center"><strong>MD5</strong></td>
+      <td><code>d3eeec515c96cc5229fc4a1dc53eef7a</code></td>
+    </tr>
+    <tr style="background-color: #f6f8fa;">
+      <td align="center"><strong>SHA-1</strong></td>
+      <td><code>48b1bf84b31072f21a7ca57943911df11fd65e7a</code></td>
+    </tr>
+    <tr>
+      <td align="center"><strong>SHA-256</strong></td>
+      <td><code>26c4cfb4b689af68b71ff273c9eb11e15d6959f92317e1a19fdb84be08f2a41c</code></td>
+    </tr>
+  </tbody>
+</table>
+
+> 💡 **Tip:** Use `CertUtil -hashfile Carb.exe SHA256` (Windows) or `sha256sum Carb.exe` (Linux) to verify the hash locally.
