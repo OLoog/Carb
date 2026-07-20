@@ -1,3 +1,4 @@
+# License
 This project is open source and free for everyone. You are welcome to use, modify, share, and even sell it. No permission needed – just have fun and build something great!
 
 The MIT License (MIT)
